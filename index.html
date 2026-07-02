@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awaken Lions</title>
+  <meta name="description" content="Something is stirring. Awaken Lions — rap, spoken word, and a path inward.">
+  <meta property="og:title" content="Awaken Lions">
+  <meta property="og:description" content="Something is stirring.">
+  <meta property="og:image" content="/hero.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://awaken-lions.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --stone:    #A0937D;
+      --sand:     #C4B69C;
+      --fog:      #7A7A7A;
+      --deep:     #0B0B0B;
+      --charcoal: #1A1A1A;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--deep);
+      color: var(--stone);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      width: 100%;
+      max-width: 1200px;
+      padding: 6vh 1.5rem 2vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero img {
+      width: 100%;
+      max-width: 900px;
+      height: auto;
+      opacity: 0;
+      animation: emerge 2.4s ease-out 0.3s forwards;
+    }
+
+    @keyframes emerge {
+      0%   { opacity: 0; transform: scale(0.97); filter: blur(6px); }
+      100% { opacity: 1; transform: scale(1);    filter: blur(0);   }
+    }
+
+    /* ── CORE ── */
+    .core {
+      max-width: 640px;
+      padding: 2rem 1.5rem 4rem;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 1.6s ease-out 1.8s forwards;
+    }
+
+    @keyframes fadeUp {
+      0%   { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0);    }
+    }
+
+    .tagline {
+      font-family: 'Cinzel', serif;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--sand);
+      letter-spacing: 0.12em;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .sub {
+      font-size: 0.95rem;
+      color: var(--fog);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ── KO-FI LINK ── */
+    .kofi {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--stone);
+      color: var(--sand);
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.4s ease;
+    }
+
+    .kofi:hover, .kofi:focus {
+      background: var(--stone);
+      color: var(--deep);
+    }
+
+    /* ── FOOTER ── */
+    .foot {
+      margin-top: auto;
+      padding: 2rem 1.5rem;
+      font-size: 0.75rem;
+      color: var(--fog);
+      opacity: 0.4;
+      text-align: center;
+    }
+
+    /* ── SEPARATOR ── */
+    .sep {
+      width: 40px;
+      height: 1px;
+      background: var(--stone);
+      opacity: 0.3;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero { padding: 4vh 1rem 1vh; }
+      .core { padding: 1.5rem 1.25rem 3rem; }
+    }
+
+    /* ── REDUCED MOTION ── */
+    @media (prefers-reduced-motion: reduce) {
+      .hero img, .core { animation: none; opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <img src="hero.png" alt="Awaken Lions" width="900" height="506">
+  </section>
+
+  <section class="core">
+    <div class="sep"></div>
+    <p class="tagline">Something is stirring.</p>
+    <p class="sub">
+      Rap. Spoken word. A path inward.<br>
+      First sounds dropping soon.
+    </p>
+    <a class="kofi" href="https://ko-fi.com/awakenlions" target="_blank" rel="noopener">
+      Support the project
+    </a>
+  </section>
+
+  <footer class="foot">
+    &copy; 2026 Awaken Lions
+  </footer>
+
+  <!-- 
+    ᚠ — The first fire was not given. It was taken.
+    If you found this, you're paying attention.
+    More will come. Watch the frequencies.
+  -->
+
+</body>
+</html>
