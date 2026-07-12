@@ -202,23 +202,37 @@
     scene.fog = new THREE.Fog(0x0b0b0b, 170, 420);
     camera = new THREE.PerspectiveCamera(52, 1, 1, 600);
 
+    // Sprite lumineux : cœur blanc chaud (210,207,204) + halo bleuté (160,182,214)
+    function dotTexture(){
+      var s = 64, cv = document.createElement('canvas');
+      cv.width = cv.height = s;
+      var g = cv.getContext('2d');
+      var grd = g.createRadialGradient(s/2, s/2, 0, s/2, s/2, s/2);
+      grd.addColorStop(0.00, 'rgba(210,207,204,1)');
+      grd.addColorStop(0.22, 'rgba(210,207,204,0.85)');
+      grd.addColorStop(0.45, 'rgba(160,182,214,0.45)');
+      grd.addColorStop(1.00, 'rgba(160,182,214,0)');
+      g.fillStyle = grd; g.fillRect(0, 0, s, s);
+      return new THREE.CanvasTexture(cv);
+    }
+
     geo = new THREE.BufferGeometry();
     var pos = new Float32Array(NX * NZ * 3);
     var col = new Float32Array(NX * NZ * 3);
-    var base = new THREE.Color(0xa0937d), c = new THREE.Color();
-    var i, k2, x, z, o = 0;
+    var i, k2, x, z, v, o = 0;
     for (k2 = 0; k2 < NZ; k2++) for (i = 0; i < NX; i++) {
       x = (i/(NX-1) - .5) * SX; z = (k2/(NZ-1) - .5) * SZ;
       pos[o] = x; pos[o+1] = 0; pos[o+2] = z;
-      c.copy(base).multiplyScalar(.55 + .45 * Math.random());
-      col[o] = c.r; col[o+1] = c.g; col[o+2] = c.b;
+      v = .5 + .5 * Math.random();          // dégradé de luminosité conservé
+      col[o] = v; col[o+1] = v; col[o+2] = v;
       o += 3;
     }
     geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
     geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
     points = new THREE.Points(geo, new THREE.PointsMaterial({
-      size: small ? 1.6 : 1.9, vertexColors: true,
-      transparent: true, opacity: .85, sizeAttenuation: true }));
+      size: small ? 2.4 : 3.0, map: dotTexture(), vertexColors: true,
+      transparent: true, opacity: .9, sizeAttenuation: true,
+      blending: THREE.AdditiveBlending, depthWrite: false }));
     scene.add(points);
 
     function resize(){
