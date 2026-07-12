@@ -3,169 +3,175 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Awaken Lions</title>
-  <meta name="description" content="Something is stirring. Awaken Lions — old roots, modern static, raw force. A path inward.">
+  <title>Awaken Lions — old roots, modern static, raw force</title>
+  <meta name="description" content="Awaken Lions. Three currents, one wave — electro, epic metal, tribal roots. Long-form music as a path of awakening. Something is stirring.">
   <meta property="og:title" content="Awaken Lions">
-  <meta property="og:description" content="Something is stirring.">
-  <meta property="og:image" content="/hero.png">
+  <meta property="og:description" content="Three currents, one wave. Something is stirring.">
+  <meta property="og:image" content="https://awaken-lions.com/hero.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://awaken-lions.com">
   <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --stone:    #A0937D;
-      --sand:     #C4B69C;
-      --fog:      #7A7A7A;
-      --deep:     #0B0B0B;
-      --charcoal: #1A1A1A;
+    @font-face {
+      font-family:'Melete';
+      src:url('/melete-regular.woff2') format('woff2');
+      font-weight:400; font-display:swap;
     }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root { --stone:#A0937D; --sand:#C4B69C; --fog:#7A7A7A; --deep:#0B0B0B; --charcoal:#161614; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--deep); color:var(--stone);
+      font-family:'IBM Plex Sans',sans-serif; font-weight:300;
+      min-height:100vh; display:flex; flex-direction:column; align-items:center;
+      overflow-x:hidden; }
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--deep);
-      color: var(--stone);
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-x: hidden;
-    }
+    /* ── ONDE (fil conducteur visuel) ── */
+    .wave { width:100%; max-width:1100px; height:46px; overflow:hidden;
+      opacity:.35; margin:1.2rem 0; }
+    .wave svg { width:200%; height:100%; animation:drift 26s linear infinite; }
+    .wave.w2 svg { animation-duration:38s; animation-direction:reverse; opacity:.6; }
+    @keyframes drift { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 
     /* ── HERO ── */
-    .hero {
-      width: 100%;
-      max-width: 1200px;
-      padding: 6vh 1.5rem 2vh;
-      display: flex;
-      justify-content: center;
-    }
+    .hero { width:100%; max-width:1200px; padding:6vh 1.5rem 0;
+      display:flex; flex-direction:column; align-items:center; }
+    .hero img.mark { width:min(200px,40vw); height:auto;
+      opacity:0; animation:emerge 2.2s ease-out .2s forwards; }
+    .hero h1 { font-family:'Melete','Cinzel',serif; font-weight:400;
+      font-size:clamp(1.7rem,5.5vw,2.9rem); color:var(--sand);
+      letter-spacing:.24em; margin-top:1.6rem; text-align:center;
+      opacity:0; animation:emerge 2.2s ease-out .7s forwards; }
+    @keyframes emerge { 0%{opacity:0; transform:scale(.97); filter:blur(6px);}
+                        100%{opacity:1; transform:scale(1); filter:blur(0);} }
 
-    .hero img {
-      width: 100%;
-      max-width: 900px;
-      height: auto;
-      opacity: 0;
-      animation: emerge 2.4s ease-out 0.3s forwards;
-    }
+    .tagline { font-family:'Cinzel',serif; font-size:clamp(1rem,2.4vw,1.35rem);
+      color:var(--sand); letter-spacing:.14em; text-align:center;
+      margin:2.2rem 0 .8rem; opacity:0; animation:fadeUp 1.6s ease-out 1.4s forwards; }
+    @keyframes fadeUp { 0%{opacity:0; transform:translateY(18px);}
+                        100%{opacity:1; transform:translateY(0);} }
 
-    @keyframes emerge {
-      0%   { opacity: 0; transform: scale(0.97); filter: blur(6px); }
-      100% { opacity: 1; transform: scale(1);    filter: blur(0);   }
-    }
+    section { max-width:680px; padding:2.5rem 1.5rem; text-align:center; width:100%; }
+    h2 { font-family:'Cinzel',serif; font-weight:400; font-size:1.05rem;
+      letter-spacing:.28em; color:var(--stone); text-transform:uppercase;
+      margin-bottom:1.6rem; }
+    p.body { font-size:.98rem; color:var(--fog); line-height:1.9; }
+    p.body b { color:var(--sand); font-weight:400; }
+    .sep { width:40px; height:1px; background:var(--stone); opacity:.3; margin:0 auto 2rem; }
 
-    /* ── CORE ── */
-    .core {
-      max-width: 640px;
-      padding: 2rem 1.5rem 4rem;
-      text-align: center;
-      opacity: 0;
-      animation: fadeUp 1.6s ease-out 1.8s forwards;
-    }
+    /* ── WATCH ── */
+    .frame { position:relative; width:100%; aspect-ratio:16/9;
+      background:var(--charcoal); border:1px solid #26241f;
+      display:flex; align-items:center; justify-content:center; }
+    .frame span { color:var(--fog); font-family:'Cinzel',serif;
+      letter-spacing:.18em; font-size:.85rem; }
+    .frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
 
-    @keyframes fadeUp {
-      0%   { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0);    }
-    }
-
-    .tagline {
-      font-family: 'Cinzel', serif;
-      font-weight: 400;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      color: var(--sand);
-      letter-spacing: 0.12em;
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-    }
-
-    .sub {
-      font-size: 0.95rem;
-      color: var(--fog);
-      line-height: 1.7;
-      margin-bottom: 3rem;
-    }
-
-    /* ── KO-FI LINK ── */
-    .kofi {
-      display: inline-block;
-      padding: 0.75rem 2rem;
-      border: 1px solid var(--stone);
-      color: var(--sand);
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.15em;
-      text-decoration: none;
-      text-transform: uppercase;
-      transition: all 0.4s ease;
-    }
-
-    .kofi:hover, .kofi:focus {
-      background: var(--stone);
-      color: var(--deep);
-    }
+    /* ── BOUTONS ── */
+    .btn { display:inline-block; padding:.8rem 2.2rem; border:1px solid var(--stone);
+      color:var(--sand); font-family:'Cinzel',serif; font-size:.85rem;
+      letter-spacing:.15em; text-decoration:none; text-transform:uppercase;
+      transition:all .4s ease; background:none; cursor:pointer; }
+    .btn:hover, .btn:focus { background:var(--stone); color:var(--deep); }
+    .btn.primary { border-width:2px; }
+    .note { font-size:.78rem; color:var(--fog); margin-top:1rem; opacity:.8; }
 
     /* ── FOOTER ── */
-    .foot {
-      margin-top: auto;
-      padding: 2rem 1.5rem;
-      font-size: 0.75rem;
-      color: var(--fog);
-      opacity: 0.4;
-      text-align: center;
-    }
+    .foot { margin-top:auto; padding:2.5rem 1.5rem 2rem; font-size:.75rem;
+      color:var(--fog); opacity:.5; text-align:center; line-height:2; }
+    .foot a { color:inherit; }
+    .foot .rune { text-decoration:none; opacity:.5; font-size:.9rem; padding:0 .3rem; }
+    .foot .rune:hover { opacity:1; color:var(--sand); }
 
-    /* ── SEPARATOR ── */
-    .sep {
-      width: 40px;
-      height: 1px;
-      background: var(--stone);
-      opacity: 0.3;
-      margin: 0 auto 2.5rem;
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      .hero { padding: 4vh 1rem 1vh; }
-      .core { padding: 1.5rem 1.25rem 3rem; }
-    }
-
-    /* ── REDUCED MOTION ── */
     @media (prefers-reduced-motion: reduce) {
-      .hero img, .core { animation: none; opacity: 1; }
+      .hero img.mark, .hero h1, .tagline { animation:none; opacity:1; }
+      .wave svg { animation:none; }
     }
   </style>
 </head>
 <body>
 
-  <section class="hero">
-    <img src="hero.png" alt="Awaken Lions" width="900" height="506">
+  <div class="hero">
+    <img class="mark" src="/icon-512.png" alt="Awaken Lions" width="200" height="200">
+    <h1>AWAKEN&nbsp;LIONS</h1>
+  </div>
+
+  <p class="tagline">Something is stirring.</p>
+
+  <div class="wave"><svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,23 C100,3 200,43 300,23 C400,3 500,43 600,23 C700,3 800,43 900,23 C1000,3 1100,43 1200,23 C1300,3 1400,43 1500,23 C1600,3 1700,43 1800,23 C1900,3 2000,43 2100,23 C2200,3 2300,43 2400,23"
+      fill="none" stroke="#A0937D" stroke-width="1"/></svg></div>
+
+  <!-- ═══ WATCH ═══ -->
+  <section id="watch">
+    <h2>Listen</h2>
+    <div class="frame">
+      <span>First sounds coming soon</span>
+      <!-- Après upload de la cover, remplacer la ligne ci-dessus par :
+      <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+        title="Awaken Lions — Hi Ren (Cover)" allowfullscreen
+        allow="accelerometer; encrypted-media; picture-in-picture"></iframe>
+      -->
+    </div>
+    <p class="note">One take. No safety net. 9:48 of it.</p>
   </section>
 
-  <section class="core">
+  <!-- ═══ THE CURRENT ═══ -->
+  <section id="current">
     <div class="sep"></div>
-    <p class="tagline">Something is stirring.</p>
-    <p class="sub">
-      Old roots. Modern static. Raw force.<br>
-      First sounds coming soon.
+    <h2>The Current</h2>
+    <p class="body">
+      Three currents, one wave. <b>Modern static</b> — electro pulse, torn and
+      restless. <b>Epic force</b> — metal that stands its ground. <b>Old
+      roots</b> — tribal earth, the shaman's floor under it all.<br><br>
+      Long-form journeys, not disposable loops. Music built as a
+      <b>process of opening</b> — eyes, mind, breath. Power. Courage.
+      Perseverance. The lucidity to face what is real — and the wisdom
+      nature never stopped offering.<br><br>
+      No gurus here. Just a path, walked out loud.
     </p>
-    <a class="kofi" href="https://ko-fi.com/awakenlions" target="_blank" rel="noopener">
+  </section>
+
+  <div class="wave w2"><svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,23 C150,8 300,38 450,23 C600,8 750,38 900,23 C1050,8 1200,38 1350,23 C1500,8 1650,38 1800,23 C1950,8 2100,38 2250,23 C2400,8 2550,38 2700,23"
+      fill="none" stroke="#A0937D" stroke-width="1"/></svg></div>
+
+  <!-- ═══ JOIN ═══ -->
+  <section id="join">
+    <h2>Join the Pride</h2>
+    <p class="body">
+      The pride gathers before the first roar.<br>
+      Be the first to hear every release — and the first to see
+      the threads others miss.
+    </p><br>
+    <!-- Quand la page Laylo existe : remplacer href="#" par l'URL Laylo -->
+    <a class="btn primary" href="mailto:contact@awaken-lions.com?subject=Count%20me%20in"
+       id="join-btn">Be there when it drops</a>
+    <p class="note">No spam. Just signal.</p>
+  </section>
+
+  <!-- ═══ SUPPORT ═══ -->
+  <section id="support">
+    <div class="sep"></div>
+    <a class="btn" href="https://ko-fi.com/awakenlions" target="_blank" rel="noopener">
       Support the project
     </a>
   </section>
 
   <footer class="foot">
     &copy; 2026 Awaken Lions &nbsp;·&nbsp;
-    <a href="/pgp.html" style="color:inherit">PGP</a>
+    <a href="/pgp.html">PGP</a> &nbsp;·&nbsp;
+    <a href="mailto:contact@awaken-lions.com">contact</a>
+    <a class="rune" href="/quest.html" aria-label="ᛃ">ᛃ</a>
   </footer>
 
-  <!-- 
+  <!--
     ᚠ — The first fire was not given. It was taken.
     If you found this, you're paying attention.
     More will come. Watch the frequencies.
