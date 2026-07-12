@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awaken Lions — The Den</title>
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    @font-face { font-family:'Melete';
+      src:url('/melete-regular.woff2') format('woff2');
+      font-weight:400; font-display:swap; }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--stone:#A0937D;--sand:#C4B69C;--fog:#7A7A7A;--deep:#0B0B0B;--charcoal:#161614}
+    body{background:var(--deep);color:var(--stone);
+      font-family:'IBM Plex Sans',sans-serif;font-weight:300;min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;padding:2rem 1.5rem}
+    h1,h2,.tagline,p,label,.note{text-shadow:0 0 10px rgba(11,11,11,.95),
+      0 1px 2px rgba(11,11,11,.9)}
+    .mark{width:90px;margin-top:4vh}
+    h1{font-family:'Melete','Cinzel',serif;font-weight:400;color:var(--sand);
+      letter-spacing:.22em;font-size:clamp(1.2rem,4vw,1.7rem);margin-top:1.2rem}
+    .tagline{font-family:'Cinzel',serif;color:var(--fog);letter-spacing:.14em;
+      font-size:.85rem;margin:.8rem 0 3rem}
+    .card{width:100%;max-width:380px;background:rgba(22,22,20,.75);
+      border:1px solid #26241f;padding:2rem;backdrop-filter:blur(4px)}
+    h2{font-family:'Cinzel',serif;font-weight:400;font-size:.95rem;
+      letter-spacing:.24em;color:var(--stone);text-transform:uppercase;
+      text-align:center;margin-bottom:1.6rem}
+    label{display:block;font-size:.78rem;color:var(--fog);
+      letter-spacing:.08em;margin-bottom:.4rem}
+    input{width:100%;background:var(--deep);border:1px solid var(--stone);
+      color:var(--sand);padding:.75rem 1rem;font:inherit;text-align:center;
+      margin-bottom:1.2rem}
+    .btn{width:100%;padding:.85rem;border:2px solid var(--stone);
+      background:none;color:var(--sand);font-family:'Cinzel',serif;
+      font-size:.85rem;letter-spacing:.15em;text-transform:uppercase;
+      cursor:pointer;transition:all .4s ease}
+    .btn:hover{background:var(--stone);color:var(--deep)}
+    .note{font-size:.75rem;color:var(--fog);text-align:center;margin-top:1.1rem;
+      line-height:1.7}
+    .back{margin-top:2.5rem;font-size:.75rem;opacity:.55}
+    .back a{color:inherit;text-decoration:none}
+    /* ══ GABARIT ESPACE MEMBRE (masqué — Opus l'active après auth) ══ */
+    #den{display:none;width:100%;max-width:680px}
+    .tabs{display:flex;gap:.5rem;justify-content:center;margin-bottom:1.5rem;
+      flex-wrap:wrap}
+    .tabs button{background:none;border:1px solid #26241f;color:var(--fog);
+      padding:.5rem 1.2rem;font:inherit;font-size:.8rem;letter-spacing:.12em;
+      text-transform:uppercase;cursor:pointer}
+    .tabs button.on{border-color:var(--stone);color:var(--sand)}
+    .pane{display:none}.pane.on{display:block}
+  </style>
+</head>
+<body>
+
+  <img class="mark" src="/icon-512.png" alt="">
+  <h1 translate="no" class="notranslate">THE&nbsp;DEN</h1>
+  <p class="tagline">The pride's own ground.</p>
+
+  <!-- ══ LOGIN (lien magique — à brancher : Supabase Auth signInWithOtp) ══ -->
+  <div class="card" id="gate">
+    <h2>Enter</h2>
+    <form id="login-form">
+      <label for="lf-email">Your email — we send you a key. No password to remember.</label>
+      <input id="lf-email" type="email" required placeholder="you@…">
+      <button class="btn" type="submit">Send my key</button>
+    </form>
+    <p class="note" id="gate-note">
+      The Den is being built. Leave your email on the
+      <a href="/" style="color:var(--sand)">main page</a> to be told when
+      the doors open.
+    </p>
+  </div>
+
+  <!-- ══ ESPACE MEMBRE — GABARIT (display:none tant que non authentifié) ══
+       Opus : après session Supabase Auth valide →
+       #gate.style.display='none' ; #den.style.display='block' ;
+       remplir les champs data-* depuis la table members/subscribers. -->
+  <div id="den">
+    <div class="tabs">
+      <button class="on" data-pane="profile">Profile</button>
+      <button data-pane="invoices">Invoices</button>
+      <button data-pane="vip">VIP</button>
+    </div>
+    <div class="card pane on" id="pane-profile">
+      <h2>Profile</h2>
+      <label>First name</label><input data-field="name" type="text">
+      <label>Email</label><input data-field="email" type="email" disabled>
+      <button class="btn" data-action="save-profile">Save</button>
+      <p class="note">Unsubscribe or delete my data —
+        <a href="mailto:contact@awaken-lions.com" style="color:var(--sand)">one email</a>.</p>
+    </div>
+    <div class="card pane" id="pane-invoices">
+      <h2>Invoices</h2>
+      <p class="note" data-slot="invoices">No invoices yet. When memberships
+        open, they will live here.</p>
+    </div>
+    <div class="card pane" id="pane-vip">
+      <h2>VIP</h2>
+      <p class="note" data-slot="vip">Exclusive ground. Locked until the
+        first originals drop. ᛊ</p>
+    </div>
+  </div>
+
+  <div class="back"><a href="/">← return</a></div>
+
+  <script>
+  // Login : coquille v1 — message honnête tant que l'auth n'est pas branchée.
+  document.getElementById('login-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('gate-note').textContent =
+      'The Den opens soon. Your key will work the day the doors do.';
+  });
+  // Onglets du gabarit membre (déjà fonctionnels pour Opus)
+  document.querySelectorAll('.tabs button').forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+      document.querySelectorAll('.pane').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      document.getElementById('pane-'+b.dataset.pane).classList.add('on');
+    });
+  });
+  </script>
+</body>
+</html>
