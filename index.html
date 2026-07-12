@@ -98,7 +98,7 @@
 <body>
 
   <canvas id="ondes" aria-hidden="true"
-    style="position:fixed;inset:0;z-index:-1;opacity:.55"></canvas>
+    style="position:fixed;inset:0;z-index:-1;opacity:.8"></canvas>
 
   <div class="hero">
     <img class="mark" src="/icon-512.png" alt="Awaken Lions" width="200" height="200">
@@ -106,10 +106,6 @@
   </div>
 
   <p class="tagline">Something is stirring.</p>
-
-  <div class="wave"><svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,23 C100,3 200,43 300,23 C400,3 500,43 600,23 C700,3 800,43 900,23 C1000,3 1100,43 1200,23 C1300,3 1400,43 1500,23 C1600,3 1700,43 1800,23 C1900,3 2000,43 2100,23 C2200,3 2300,43 2400,23"
-      fill="none" stroke="#A0937D" stroke-width="1"/></svg></div>
 
   <!-- ═══ WATCH ═══ -->
   <section id="watch">
@@ -140,10 +136,6 @@
       No gurus here. Just a path, walked out loud.
     </p>
   </section>
-
-  <div class="wave w2"><svg viewBox="0 0 1200 46" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0,23 C150,8 300,38 450,23 C600,8 750,38 900,23 C1050,8 1200,38 1350,23 C1500,8 1650,38 1800,23 C1950,8 2100,38 2250,23 C2400,8 2550,38 2700,23"
-      fill="none" stroke="#A0937D" stroke-width="1"/></svg></div>
 
   <!-- ═══ JOIN ═══ -->
   <section id="join">
@@ -207,7 +199,7 @@
     renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: false});
     renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
     scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x0b0b0b, 120, 340);
+    scene.fog = new THREE.Fog(0x0b0b0b, 170, 420);
     camera = new THREE.PerspectiveCamera(52, 1, 1, 600);
 
     geo = new THREE.BufferGeometry();
@@ -258,10 +250,10 @@
       // Dérive de caméra : du profil (sinusoïdes) au 3/4 plongeant, très lent
       var a = t * 0.045;
       camera.position.set(
-        Math.sin(a) * 150,
-        34 + 46 * (0.5 + 0.5 * Math.sin(t * 0.03)),
-        Math.cos(a * 0.7) * 165);
-      camera.lookAt(0, 0, 0);
+        Math.sin(a) * 125,
+        26 + 42 * (0.5 + 0.5 * Math.sin(t * 0.03)),
+        Math.cos(a * 0.7) * 135);
+      camera.lookAt(0, -10, 0);
       renderer.render(scene, camera);
     })();
   })();
