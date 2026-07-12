@@ -150,10 +150,45 @@
       Be the first to hear every release — and the first to see
       the threads others miss.
     </p><br>
-    <!-- Quand la page Laylo existe : remplacer href="#" par l'URL Laylo -->
-    <a class="btn primary" href="mailto:contact@awaken-lions.com?subject=Count%20me%20in"
-       id="join-btn">Be there when it drops</a>
-    <p class="note">No spam. Just signal.</p>
+    <form id="join-form" style="display:flex;flex-direction:column;gap:.8rem;
+          max-width:340px;margin:0 auto" autocomplete="on">
+      <input name="name" type="text" placeholder="First name" maxlength="60"
+        style="background:var(--charcoal);border:1px solid var(--stone);
+        color:var(--sand);padding:.7rem 1rem;font:inherit;text-align:center">
+      <input name="email" type="email" required placeholder="Email" maxlength="120"
+        style="background:var(--charcoal);border:1px solid var(--stone);
+        color:var(--sand);padding:.7rem 1rem;font:inherit;text-align:center">
+      <button class="btn primary" type="submit">Be there when it drops</button>
+    </form>
+    <p class="note" id="join-note">No spam. Just signal. Unsubscribe anytime
+      — one email to contact@awaken-lions.com.</p>
+    <script>
+    document.getElementById('join-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      var f = e.target, btn = f.querySelector('button');
+      btn.disabled = true; btn.textContent = '…';
+      fetch('https://slmrcomqhjwunujntvep.supabase.co/rest/v1/subscribers', {
+        method: 'POST',
+        headers: {
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsbXJjb21xaGp3dW51am50dmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2MzcxODgsImV4cCI6MjA5OTIxMzE4OH0.p2BCrdBYY7wSoPY136OSbg9mCVeEjNJvpsEjZuoV3ME',
+          'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNsbXJjb21xaGp3dW51am50dmVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM2MzcxODgsImV4cCI6MjA5OTIxMzE4OH0.p2BCrdBYY7wSoPY136OSbg9mCVeEjNJvpsEjZuoV3ME',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ name: f.name.value.trim() || null,
+                               email: f.email.value.trim().toLowerCase() })
+      }).then(function(r){
+        if (r.ok || r.status === 409) {
+          f.outerHTML = '<p class="tagline" style="opacity:1;animation:none">' +
+                        'You are in the pride. ᛊ</p>';
+          document.getElementById('join-note').textContent =
+            'We will roar only when it matters.';
+        } else { throw new Error(r.status); }
+      }).catch(function(){
+        btn.disabled = false; btn.textContent = 'Try again';
+      });
+    });
+    </script>
   </section>
 
   <!-- ═══ SUPPORT ═══ -->
@@ -165,8 +200,8 @@
   </section>
 
   <footer class="foot">
-    &copy; 2026 Awaken Lions &nbsp;·&nbsp;
-    <a href="/pgp.html">PGP</a> &nbsp;·&nbsp;
+    <span translate="no" class="notranslate">&copy; 2026 Awaken Lions</span>
+    &nbsp;·&nbsp;
     <a href="mailto:contact@awaken-lions.com">contact</a>
     <a class="rune" href="/quest.html" aria-label="ᛃ">ᛃ</a>
   </footer>
