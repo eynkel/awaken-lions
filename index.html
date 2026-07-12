@@ -97,6 +97,9 @@
 </head>
 <body>
 
+  <canvas id="ondes" aria-hidden="true"
+    style="position:fixed;inset:0;z-index:-1;opacity:.55"></canvas>
+
   <div class="hero">
     <img class="mark" src="/icon-512.png" alt="Awaken Lions" width="200" height="200">
     <h1>AWAKEN&nbsp;LIONS</h1>
@@ -176,6 +179,93 @@
     If you found this, you're paying attention.
     More will come. Watch the frequencies.
   -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+  (function(){
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof THREE === 'undefined') return;
+    var canvas = document.getElementById('ondes');
+    var renderer, scene, camera, points, geo;
+    var small = innerWidth < 700;
+    var NX = small ? 90 : 160;   // points le long de l'onde
+    var NZ = small ? 26 : 42;    // nombre de lignes
+    var SX = 260, SZ = 150;      // étendue monde
+
+    // Chaque ligne = sa propre onde : longueur, amplitude, vitesse, phase
+    var lines = [];
+    for (var k = 0; k < NZ; k++) {
+      var t = k / (NZ - 1);
+      lines.push({
+        lambda: 26 + 74 * Math.pow(Math.sin(3.1 * t + 0.4), 2), // λ variées
+        amp:    3.5 + 9 * Math.sin(2.2 * t + 1.1) * Math.sin(2.2 * t + 1.1),
+        omega:  0.35 + 0.75 * t,
+        phase:  t * 6.28 * 1.7
+      });
+    }
+
+    renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: false});
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 1.6));
+    scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x0b0b0b, 120, 340);
+    camera = new THREE.PerspectiveCamera(52, 1, 1, 600);
+
+    geo = new THREE.BufferGeometry();
+    var pos = new Float32Array(NX * NZ * 3);
+    var col = new Float32Array(NX * NZ * 3);
+    var base = new THREE.Color(0xa0937d), c = new THREE.Color();
+    var i, k2, x, z, o = 0;
+    for (k2 = 0; k2 < NZ; k2++) for (i = 0; i < NX; i++) {
+      x = (i/(NX-1) - .5) * SX; z = (k2/(NZ-1) - .5) * SZ;
+      pos[o] = x; pos[o+1] = 0; pos[o+2] = z;
+      c.copy(base).multiplyScalar(.55 + .45 * Math.random());
+      col[o] = c.r; col[o+1] = c.g; col[o+2] = c.b;
+      o += 3;
+    }
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    points = new THREE.Points(geo, new THREE.PointsMaterial({
+      size: small ? 1.6 : 1.9, vertexColors: true,
+      transparent: true, opacity: .85, sizeAttenuation: true }));
+    scene.add(points);
+
+    function resize(){
+      renderer.setSize(innerWidth, innerHeight, false);
+      camera.aspect = innerWidth / innerHeight;
+      camera.updateProjectionMatrix();
+    }
+    addEventListener('resize', resize); resize();
+
+    var running = true;
+    document.addEventListener('visibilitychange',
+      function(){ running = !document.hidden; });
+
+    var t0 = performance.now();
+    (function loop(){
+      requestAnimationFrame(loop);
+      if (!running) return;
+      var t = (performance.now() - t0) / 1000;
+      var p = geo.attributes.position.array, o = 0, L;
+      for (var k = 0; k < NZ; k++) {
+        L = lines[k];
+        for (var i = 0; i < NX; i++) {
+          p[o+1] = L.amp * Math.sin(6.2832 * p[o] / L.lambda
+                                    + t * L.omega + L.phase);
+          o += 3;
+        }
+      }
+      geo.attributes.position.needsUpdate = true;
+      // Dérive de caméra : du profil (sinusoïdes) au 3/4 plongeant, très lent
+      var a = t * 0.045;
+      camera.position.set(
+        Math.sin(a) * 150,
+        34 + 46 * (0.5 + 0.5 * Math.sin(t * 0.03)),
+        Math.cos(a * 0.7) * 165);
+      camera.lookAt(0, 0, 0);
+      renderer.render(scene, camera);
+    })();
+  })();
+  </script>
 
 </body>
 </html>
